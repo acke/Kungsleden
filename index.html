@@ -584,7 +584,7 @@
 <header class="top">
   <div class="brand">
     <h1>Kungsleden</h1>
-    <div class="route mono">Nikkaluokta ⇄ Abisko<br>June 2027</div>
+    <div class="route mono">Saltoluokta ⇄ Nikkaluokta<br>June 2027</div>
   </div>
   <nav class="tabs" role="tablist">
     <button id="tab-pack" role="tab" aria-selected="true">Pack List</button>
@@ -616,8 +616,8 @@
       <figcaption>Typical Kungsleden terrain — boardwalks across the wet stretches, open fjäll all around.</figcaption>
     </figure>
     <div class="route-toggle" role="tablist" aria-label="Choose route">
-      <button id="route-abisko" role="tab" data-route="abisko">Abisko route<small>Abisko → Nikkaluokta</small></button>
-      <button id="route-saltoluokta" role="tab" data-route="saltoluokta">Saltoluokta route<small>Nikkaluokta → Saltoluokta</small></button>
+      <button id="route-saltoluokta" role="tab" data-route="saltoluokta">Saltoluokta route<small>Saltoluokta → Nikkaluokta</small></button>
+      <button id="route-abisko" role="tab" data-route="abisko">Abisko route<small>Abisko → Nikkaluokta · later trip</small></button>
     </div>
 
     <h2 class="subhead">Route &amp; Elevation</h2>
@@ -626,7 +626,7 @@
       <figcaption id="map-caption">The full Kungsleden, Abisko–Hemavan. Our hike covers the northernmost stretch — Abisko fjällstation down through Sälkastugan and Kebnekaise fjällstation — then leaves the marked trail for the Nikkaluokta path to finish.</figcaption>
     </figure>
 
-    <figure class="elevation-figure" id="elev-abisko">
+    <figure class="elevation-figure" id="elev-abisko" hidden>
       <svg viewBox="0 0 400 220" role="img" aria-label="Elevation profile from Abisko to Nikkaluokta: a gradual climb over three days to Tjäktjapasset at 1150 metres, the trail's high point, then a descent past Alesjaure and Kebnekaise Fjällstation, with a dashed side-trip spur up to Kebnekaise's 2097 metre summit on day 7, before the final descent to Nikkaluokta.">
         <line x1="34" y1="173" x2="390" y2="173" stroke="var(--line)" stroke-width="1"/>
         <line x1="34" y1="125" x2="390" y2="125" stroke="var(--line)" stroke-width="1"/>
@@ -683,8 +683,8 @@
       <figcaption>Approximate elevation, Abisko to Nikkaluokta. The solid line is the 107km trail; the dashed spur is the optional summit push on day 7.</figcaption>
     </figure>
 
-    <figure class="elevation-figure" id="elev-saltoluokta" hidden>
-      <svg viewBox="0 0 400 220" role="img" aria-label="Elevation profile from Nikkaluokta to Saltoluokta: climbs to Kebnekaise Fjällstation, with a dashed side-trip spur showing the 2097 metre summit, then heads south past Singi and Kaitumjaure to the route's 780 metre high point, down through Teusajaure, a boat crossing, to Vakkotavare, and finally bus and boat on to Saltoluokta.">
+    <figure class="elevation-figure" id="elev-saltoluokta">
+      <svg viewBox="0 0 400 220" role="img" aria-label="Elevation profile from Saltoluokta to Nikkaluokta: usually reached from Vakkotavare by bus and boat, then a boat crossing near Teusajaure, a climb to the route's 780 metre high point, and gently rolling terrain to Singi, then on to Kebnekaise Fjällstation. A dashed side-trip spur shows the 2097 metre summit, before the final descent to Nikkaluokta.">
         <line x1="34" y1="173" x2="390" y2="173" stroke="var(--line)" stroke-width="1"/>
         <line x1="34" y1="125" x2="390" y2="125" stroke="var(--line)" stroke-width="1"/>
         <line x1="34" y1="77" x2="390" y2="77" stroke="var(--line)" stroke-width="1"/>
@@ -698,50 +698,50 @@
         <line x1="34" y1="192" x2="390" y2="192" stroke="var(--line)" stroke-width="1.2"/>
         <g font-family="IBM Plex Mono, monospace" font-size="8" fill="var(--text-dim)">
           <text x="34" y="205" text-anchor="middle">0</text>
-          <text x="101" y="205" text-anchor="middle">19</text>
-          <text x="154" y="205" text-anchor="middle">34</text>
-          <text x="200" y="205" text-anchor="middle">47</text>
-          <text x="231" y="205" text-anchor="middle">56</text>
-          <text x="284" y="205" text-anchor="middle">71</text>
+          <text x="140" y="205" text-anchor="middle">30</text>
+          <text x="193" y="205" text-anchor="middle">45</text>
+          <text x="224" y="205" text-anchor="middle">54</text>
+          <text x="270" y="205" text-anchor="middle">67</text>
+          <text x="323" y="205" text-anchor="middle">82</text>
           <text x="368" y="205" text-anchor="middle">101</text>
           <text x="394" y="205" text-anchor="end">km</text>
         </g>
 
-        <path d="M34,175 L101,153 L154,153 L200,157 L217,146 L231,163 L284,168 L390,171 L390,192 L34,192 Z" style="fill:var(--accent-2);opacity:.14" stroke="none"/>
-        <polyline points="34,175 101,153 154,153 200,157 217,146 231,163 284,168 390,171" fill="none" style="stroke:var(--accent-2)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+        <path d="M34,171 L140,168 L193,163 L210,146 L224,157 L270,153 L323,153 L390,175 L390,192 L34,192 Z" style="fill:var(--accent-2);opacity:.14" stroke="none"/>
+        <polyline points="34,171 140,168 193,163 210,146 224,157 270,153 323,153 390,175" fill="none" style="stroke:var(--accent-2)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
 
-        <line x1="101" y1="153" x2="119" y2="20" style="stroke:var(--accent)" stroke-width="2" stroke-dasharray="4,3" stroke-linecap="round"/>
-        <polygon points="115,20 123,20 119,10" style="fill:var(--accent)"/>
-        <text x="125" y="17" font-family="IBM Plex Mono, monospace" font-size="9" font-weight="600" style="fill:var(--accent)">2097m</text>
-        <text x="125" y="27" font-family="IBM Plex Sans, sans-serif" font-size="7.5" fill="var(--text-dim)">summit, day 2</text>
+        <line x1="323" y1="153" x2="341" y2="20" style="stroke:var(--accent)" stroke-width="2" stroke-dasharray="4,3" stroke-linecap="round"/>
+        <polygon points="337,20 345,20 341,10" style="fill:var(--accent)"/>
+        <text x="347" y="17" font-family="IBM Plex Mono, monospace" font-size="9" font-weight="600" style="fill:var(--accent)">2097m</text>
+        <text x="347" y="27" font-family="IBM Plex Sans, sans-serif" font-size="7.5" fill="var(--text-dim)">summit, day 6</text>
 
         <g stroke="var(--accent-2)" stroke-width="1.3" fill="none">
-          <path d="M225,168 Q231,171.5 237,168"/>
+          <path d="M187,168 Q193,171.5 199,168"/>
         </g>
         <g stroke="var(--accent-2)" stroke-width="1.8">
-          <line x1="215" y1="142" x2="219" y2="150"/>
-          <line x1="219" y1="142" x2="215" y2="150"/>
+          <line x1="208" y1="142" x2="212" y2="150"/>
+          <line x1="212" y1="142" x2="208" y2="150"/>
         </g>
 
         <g font-family="IBM Plex Sans, sans-serif" font-size="9" fill="var(--text)">
-          <text x="36" y="185">Nikkaluokta</text>
-          <text x="101" y="166" text-anchor="middle">Kebnekaise Fjällstation</text>
-          <text x="217" y="136" text-anchor="middle" font-weight="600">780m high point</text>
-          <text x="284" y="180" text-anchor="middle" font-size="7.5" fill="var(--text-dim)">Vakkotavare (bus+boat)</text>
-          <text x="386" y="164" text-anchor="end">Saltoluokta</text>
+          <text x="36" y="165">Saltoluokta</text>
+          <text x="140" y="180" text-anchor="middle" font-size="7.5" fill="var(--text-dim)">Vakkotavare (bus+boat)</text>
+          <text x="210" y="136" text-anchor="middle" font-weight="600">780m high point</text>
+          <text x="323" y="166" text-anchor="middle">Kebnekaise Fjällstation</text>
+          <text x="386" y="168" text-anchor="end">Nikkaluokta</text>
         </g>
 
         <g fill="var(--surface)" stroke="var(--accent-2)" stroke-width="2">
-          <circle cx="34" cy="175" r="3.5"/>
-          <circle cx="101" cy="153" r="3.5"/>
-          <circle cx="154" cy="153" r="3"/>
-          <circle cx="200" cy="157" r="3"/>
-          <circle cx="231" cy="163" r="3"/>
-          <circle cx="284" cy="168" r="3"/>
-          <circle cx="390" cy="171" r="3.5"/>
+          <circle cx="34" cy="171" r="3.5"/>
+          <circle cx="140" cy="168" r="3"/>
+          <circle cx="193" cy="163" r="3"/>
+          <circle cx="224" cy="157" r="3"/>
+          <circle cx="270" cy="153" r="3"/>
+          <circle cx="323" cy="153" r="3.5"/>
+          <circle cx="390" cy="175" r="3.5"/>
         </g>
       </svg>
-      <figcaption>Elevation, Nikkaluokta to Saltoluokta (STF, official). Reaches Kebnekaise on day 1, then continues south — gentler than the Abisko route (780m against 1150m) — with a boat crossing before Vakkotavare, and bus + boat for the final stretch into Saltoluokta.</figcaption>
+      <figcaption>Elevation, Saltoluokta to Nikkaluokta (STF, official). Gentler than the Abisko route — 780m against 1150m — with a boat crossing near Teusajaure, and most commonly bus + boat instead of walking on day 1.</figcaption>
     </figure>
     <div class="trail-summary">
       <div class="stat"><b id="stat-km">107</b><span>km total</span></div>
@@ -902,16 +902,16 @@
       totalKm: 101,
       dayStat: "6+2",
       highPoint: 780,
-      mapCaption: "The full Kungsleden, Abisko–Hemavan. This option starts at Nikkaluokta like the main approach, but after Kebnekaise it keeps heading south — via Singi, Kaitumjaure, Teusajaure and Vakkotavare — to exit further down the trail at Saltoluokta, instead of turning back to Nikkaluokta.",
+      mapCaption: "The full Kungsleden, Abisko–Hemavan. This option starts further south, at Saltoluokta fjällstation, and heads north via Vakkotavare and Teusajaure to Singi, then on to Kebnekaise for the summit push, exiting at Nikkaluokta.",
       days: [
-        {n:1, stage:"Nikkaluokta → Kebnekaise Fjällstation", km:19, time:"5–7h", note:"Mountain birch forest most of the way, crossing the bridge over the river draining the Tarfala glaciers. A boat shortens it by 6km — great views of the Kebnekaise massif from the jetty, plus Restaurant Enoks. Shop + restaurant at Kebnekaise.", badges:["longest"], icon:"forest"},
-        {n:2, stage:"Summit — Kebnekaise south peak (2097m)", km:"18 rt", time:"10–15h", note:"A day of its own, roughly 1800m of climbing. Light day-pack from camp. Weather-dependent — an STF guide is recommended.", badges:["summit"], summit:true, icon:"summit"},
-        {n:3, stage:"Kebnekaise → Singi", km:15, time:"4–6h", note:"Through the narrow Laddjuvagge valley, between the walls of Singitjåkka and Skárttoaivi — some of Sweden's classic climbing routes. No shop at Singi — carry food.", badges:["noshop"], icon:"zigzag"},
-        {n:4, stage:"Singi → Kaitumjaure", km:13, time:"4–5h", note:"Easy, gently rolling terrain along the Tjäktjajåkka river, much of it on boardwalk — old Sámi reindeer-herding grounds. Shop (limited) at Kaitumjaure.", badges:[], icon:"braid"},
-        {n:5, stage:"Kaitumjaure → Teusajaure", km:9, time:"4–5h", note:"Shortest day on this route. Passes a renovated Sámi kåta, then climbs to the route's official high point, 780m, before a steep descent to Teusajaure. Shop (limited).", badges:["high"], icon:"pass"},
-        {n:6, stage:"Teusajaure → Vakkotavare", km:15, time:"4–6h", note:"Starts with a boat crossing offered by the cabin host — can be tricky in wind — then climbs through birch forest into Stora Sjöfallet National Park and over open heath before switchbacks down to Vakkotavare. No shop — carry food.", badges:["noshop"], icon:"boat"},
-        {n:7, stage:"Vakkotavare → Saltoluokta (bus + boat)", km:30, time:"9–11h hiking, or bus + boat", note:"Most hikers take transit here instead of walking: FlixBus from Vakkotavare to Kebnats, then the M/S Langas boat (~15 min) on to Saltoluokta — book both ahead. Walked in full, it follows Sweden's most scenic road and is usually split into two days. Restaurant + full services at Saltoluokta.", badges:[], icon:"boat"},
-        {n:8, stage:"Buffer — weather day / margin", km:"—", time:"—", note:"If the summit gets blown out on day 2: summit on day 3 instead, continue a day late.", badges:["buffer"], buffer:true, icon:"buffer"}
+        {n:1, stage:"Saltoluokta → Vakkotavare (bus + boat)", km:30, time:"9–11h hiking, or bus + boat", note:"Most hikers take transit here instead of walking: the M/S Langas boat (~15 min) from Saltoluokta to Kebnats, then FlixBus on to Vakkotavare — book both ahead. Walked in full, it follows Sweden's most scenic road and is usually split into two days. No shop at Vakkotavare — carry food from here on.", badges:["noshop"], icon:"boat"},
+        {n:2, stage:"Vakkotavare → Teusajaure", km:15, time:"4–6h", note:"Climbs through birch forest into Stora Sjöfallet National Park, over open heath, then a boat crossing (offered by the cabin host — can be tricky in wind) down to Teusajaure. Shop (limited).", badges:[], icon:"boat"},
+        {n:3, stage:"Teusajaure → Kaitumjaure", km:9, time:"4–5h", note:"Shortest day on this route. Passes a renovated Sámi kåta, then climbs to the route's official high point, 780m, before a steep descent to Kaitumjaure. Shop (limited).", badges:["high"], icon:"pass"},
+        {n:4, stage:"Kaitumjaure → Singi", km:13, time:"4–5h", note:"Easy, gently rolling terrain along the Tjäktjajåkka river, much of it on boardwalk — old Sámi reindeer-herding grounds. No shop at Singi — carry food.", badges:["noshop"], icon:"braid"},
+        {n:5, stage:"Singi → Kebnekaise Fjällstation", km:15, time:"4–6h", note:"Through the narrow Laddjuvagge valley, between the walls of Singitjåkka and Skárttoaivi — some of Sweden's classic climbing routes. Shop + restaurant at Kebnekaise.", badges:[], icon:"camp"},
+        {n:6, stage:"Summit — Kebnekaise south peak (2097m)", km:"18 rt", time:"10–15h", note:"A day of its own, roughly 1800m of climbing. Light day-pack from camp. Weather-dependent — an STF guide is recommended.", badges:["summit"], summit:true, icon:"summit"},
+        {n:7, stage:"Kebnekaise → Nikkaluokta", km:19, time:"5–7h", note:"Mountain birch forest most of the way, crossing the bridge over the river draining the Tarfala glaciers. A boat shortens it by 6km — great views of the Kebnekaise massif from the jetty, plus Restaurant Enoks. Bus onward to Kiruna.", badges:["longest"], icon:"forest"},
+        {n:8, stage:"Buffer — weather day / margin", km:"—", time:"—", note:"If the summit gets blown out on day 6: summit on day 7 instead, walk out on day 8.", badges:["buffer"], buffer:true, icon:"buffer"}
       ]
     }
   };
@@ -919,7 +919,7 @@
   var BADGE_LABEL = {longest:"Longest day", noshop:"No shop", high:"High point", summit:"Summit day", buffer:"Buffer"};
 
   // ---------- state ----------
-  var state = {tab:"pack", person:"papa", route:"abisko", checked:{papa:{},victor:{},junior:{},ditty:{}}};
+  var state = {tab:"pack", person:"papa", route:"saltoluokta", checked:{papa:{},victor:{},junior:{},ditty:{}}};
 
   function load(){
     try{
