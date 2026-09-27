@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Per-person packing checklist and day-by-day trail plan for the Kungsleden hike, Nikkaluokta to Abisko, June 2027.">
+<meta name="theme-color" content="#3c6e63">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%233c6e63'/%3E%3Cpath d='M6 24 14 10 18 16 22 9 27 24Z' fill='%23eef1ec'/%3E%3C/svg%3E">
+<title>Kungsleden Base Camp</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+    --bg:#eef1ec;
+    --surface:#ffffff;
+    --surface-2:#e4e9e1;
+    --text:#1f2b24;
+    --text-dim:#5b6b60;
+    --line:#d7ddd2;
+    --accent:#c1602c;
+    --accent-ink:#ffffff;
+    --accent-2:#3c6e63;
+    --warn:#9a6a1f;
+    --warn-bg:#f4e8d3;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#121815;
+      --surface:#1b2420;
+      --surface-2:#212c26;
+      --text:#e8ede7;
+      --text-dim:#93a89b;
+      --line:#2b362f;
+      --accent:#e2793f;
+      --accent-ink:#1a1005;
+      --accent-2:#7cc1ac;
+      --warn:#e0b661;
+      --warn-bg:#332a17;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#121815;
+    --surface:#1b2420;
+    --surface-2:#212c26;
+    --text:#e8ede7;
+    --text-dim:#93a89b;
+    --line:#2b362f;
+    --accent:#e2793f;
+    --accent-ink:#1a1005;
+    --accent-2:#7cc1ac;
+    --warn:#e0b661;
+    --warn-bg:#332a17;
+    color-scheme:dark;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  img{max-width:100%;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    padding-inline:16px;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .mono{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;}
+  .display{font-family:"Fjalla One",system-ui,sans-serif;letter-spacing:.02em;}
+
+  header.top{
+    position:sticky;
+    top:env(safe-area-inset-top,0px);
+    z-index:20;
+    background:var(--bg);
+    padding-top:14px;
+    margin-inline:-16px;
+    padding-inline:16px;
+  }
+  .brand{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:8px;
+  }
+  .brand h1{
+    font-family:"Fjalla One",system-ui,sans-serif;
+    font-size:1.5rem;
+    letter-spacing:.03em;
+    margin:0;
+    color:var(--accent-2);
+    text-transform:uppercase;
+  }
+  .brand .route{
+    font-size:.72rem;
+    color:var(--text-dim);
+    text-align:right;
+    line-height:1.3;
+  }
+
+  nav.tabs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+    background:var(--surface-2);
+    border-radius:12px;
+    padding:4px;
+    margin-top:12px;
+    margin-bottom:14px;
+  }
+  nav.tabs button{
+    appearance:none;
+    border:none;
+    background:transparent;
+    color:var(--text-dim);
+    font-family:"IBM Plex Sans",sans-serif;
+    font-weight:600;
+    font-size:.82rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    padding:9px 4px;
+    border-radius:9px;
+    cursor:pointer;
+  }
+  nav.tabs button[aria-selected="true"]{
+    background:var(--surface);
+    color:var(--text);
+    box-shadow:0 1px 3px rgba(0,0,0,.08);
+  }
+
+  main{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px));}
+
+  /* ---- Person picker ---- */
+  .people{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+    margin-bottom:14px;
+  }
+  .people button{
+    appearance:none;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--text);
+    border-radius:12px;
+    padding:10px 6px 9px;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:2px;
+  }
+  .people button .name{
+    font-family:"Fjalla One",sans-serif;
+    font-size:.95rem;
+    letter-spacing:.02em;
+  }
+  .people button .count{
+    font-size:.68rem;
+    color:var(--text-dim);
+  }
+  .people button[aria-pressed="true"]{
+    border-color:var(--accent);
+    background:var(--accent);
+    color:var(--accent-ink);
+  }
+  .people button[aria-pressed="true"] .count{color:var(--accent-ink);opacity:.85;}
+
+  .progress-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .progress-track{
+    flex:1;
+    height:8px;
+    border-radius:5px;
+    background:var(--surface-2);
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    background:var(--accent-2);
+    border-radius:5px;
+    transition:width .25s ease;
+  }
+  .progress-label{
+    font-size:.72rem;
+    color:var(--text-dim);
+    white-space:nowrap;
+  }
+
+  /* ---- Categories / items ---- */
+  section.category{margin-bottom:18px;}
+  section.category h2{
+    font-family:"Fjalla One",sans-serif;
+    font-size:.85rem;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    margin:0 0 8px 2px;
+  }
+  ul.itemlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;}
+  li.item{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:11px;
+  }
+  li.item label{
+    display:flex;
+    align-items:flex-start;
+    gap:11px;
+    padding:11px 12px;
+    cursor:pointer;
+  }
+  li.item input[type="checkbox"]{
+    appearance:none;
+    width:20px;
+    height:20px;
+    min-width:20px;
+    border:2px solid var(--line);
+    border-radius:6px;
+    margin-top:1px;
+    background:var(--surface);
+    cursor:pointer;
+    position:relative;
+  }
+  li.item input[type="checkbox"]:checked{
+    background:var(--accent-2);
+    border-color:var(--accent-2);
+  }
+  li.item input[type="checkbox"]:checked::after{
+    content:"";
+    position:absolute;
+    left:5px; top:1px;
+    width:6px; height:11px;
+    border:solid var(--accent-ink);
+    border-width:0 2px 2px 0;
+    transform:rotate(40deg);
+  }
+  li.item .txt{flex:1;min-width:0;}
+  li.item .en{font-size:.92rem; line-height:1.3;}
+  li.item.done .en{color:var(--text-dim); text-decoration:line-through; text-decoration-color:var(--line);}
+  li.item .sv{font-size:.74rem;color:var(--text-dim);margin-top:1px;font-style:italic;}
+  li.item .note{font-size:.74rem;color:var(--accent);margin-top:3px;}
+  li.item.done .note{color:var(--text-dim);}
+  li.item .tag{
+    display:inline-block;
+    font-size:.62rem;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:1px 5px;
+    margin-top:4px;
+  }
+
+  details.ditty{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+    margin-bottom:22px;
+    padding:2px 4px;
+  }
+  details.ditty summary{
+    list-style:none;
+    padding:12px 12px;
+    cursor:pointer;
+    font-family:"Fjalla One",sans-serif;
+    font-size:.85rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--accent-2);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  details.ditty summary::-webkit-details-marker{display:none;}
+  details.ditty summary .chev{transition:transform .2s ease;color:var(--text-dim);font-family:"IBM Plex Sans",sans-serif;}
+  details.ditty[open] summary .chev{transform:rotate(90deg);}
+  details.ditty .ditty-body{padding:0 10px 12px;}
+  details.ditty p.hint{font-size:.72rem;color:var(--text-dim);margin:2px 6px 10px;}
+
+  /* ---- Trail day cards ---- */
+  .trail-summary{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:14px 16px;
+    margin-bottom:18px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:6px;
+    text-align:center;
+  }
+  .trail-summary .stat b{
+    display:block;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:1.3rem;
+    color:var(--accent-2);
+  }
+  .trail-summary .stat span{
+    font-size:.66rem;
+    color:var(--text-dim);
+    text-transform:uppercase;
+    letter-spacing:.05em;
+  }
+
+  .subhead{
+    font-family:"Fjalla One",sans-serif;
+    font-size:.85rem;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    margin:0 0 8px 2px;
+  }
+
+  .hero-photo{
+    margin:0 0 18px;
+    border-radius:16px;
+    overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .hero-photo img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;}
+  .hero-photo figcaption{
+    padding:8px 12px;
+    font-size:.72rem;
+    color:var(--text-dim);
+    background:var(--surface);
+  }
+  .map-photo{
+    margin:0 0 20px;
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    background:var(--surface);
+  }
+  .map-photo img{
+    display:block;
+    width:100%;
+    max-height:420px;
+    height:auto;
+    object-fit:contain;
+    background:#f4f6f1;
+  }
+  .map-photo figcaption{padding:8px 12px;font-size:.72rem;color:var(--text-dim);line-height:1.4;}
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+    margin-bottom:20px;
+  }
+  .gallery figure{
+    margin:0;
+    border-radius:12px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    background:var(--surface);
+  }
+  .gallery img{display:block;width:100%;height:96px;object-fit:cover;}
+  .gallery figcaption{font-size:.62rem;color:var(--text-dim);padding:5px 6px;line-height:1.25;}
+  .elevation-figure{margin:0 0 20px;}
+  .elevation-figure svg{
+    width:100%;
+    height:auto;
+    display:block;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    box-sizing:border-box;
+    padding:8px;
+  }
+  .elevation-figure figcaption{
+    font-size:.72rem;
+    color:var(--text-dim);
+    margin-top:8px;
+    line-height:1.4;
+  }
+
+  .day-icon{
+    width:38px;
+    height:38px;
+    min-width:38px;
+    color:var(--accent-2);
+    background:var(--surface-2);
+    border-radius:10px;
+    padding:5px;
+    box-sizing:border-box;
+  }
+  .day.summit .day-icon{color:var(--accent);}
+  .day .head{align-items:flex-start;}
+  .day .head .stage{flex:1;}
+
+  .timeline{position:relative;padding-left:34px;}
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:13px; top:6px; bottom:6px;
+    width:2px;
+    background:var(--line);
+  }
+  .day{
+    position:relative;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:13px 14px;
+    margin-bottom:12px;
+  }
+  .day::before{
+    content:attr(data-n);
+    position:absolute;
+    left:-34px; top:14px;
+    width:26px; height:26px;
+    border-radius:50%;
+    background:var(--surface);
+    border:2px solid var(--accent-2);
+    color:var(--accent-2);
+    font-family:"IBM Plex Mono",monospace;
+    font-weight:600;
+    font-size:.78rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .day.summit::before{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);}
+  .day.buffer::before{border-style:dashed;color:var(--text-dim);border-color:var(--text-dim);}
+  .day .head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .day .stage{
+    font-family:"Fjalla One",sans-serif;
+    font-size:1.02rem;
+    letter-spacing:.01em;
+  }
+  .day .stats{
+    display:flex;
+    gap:12px;
+    margin-top:6px;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.78rem;
+    color:var(--text-dim);
+  }
+  .day .stats b{color:var(--text);font-weight:600;}
+  .day .note{font-size:.82rem;color:var(--text-dim);margin-top:8px;line-height:1.4;}
+  .badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+  .badge{
+    font-size:.64rem;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    padding:3px 7px;
+    border-radius:6px;
+    font-weight:600;
+  }
+  .badge.longest{background:var(--warn-bg);color:var(--warn);}
+  .badge.noshop{background:var(--surface-2);color:var(--text-dim);}
+  .badge.high{background:var(--surface-2);color:var(--accent-2);}
+  .badge.summit{background:var(--accent);color:var(--accent-ink);}
+  .badge.buffer{background:var(--surface-2);color:var(--text-dim);}
+
+  footer.note{
+    text-align:center;
+    font-size:.7rem;
+    color:var(--text-dim);
+    margin:6px 0 10px;
+  }
+
+  [hidden]{display:none!important;}
+</style>
+</head>
+<body>
+
+<svg style="position:absolute;width:0;height:0" aria-hidden="true">
+  <defs>
+    <g id="ic-gate">
+      <polygon points="2,34 14,10 26,34" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <polygon points="20,34 32,8 38,34" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <polygon points="16,34 20,26 24,34" style="fill:var(--accent)"/>
+    </g>
+    <g id="ic-zigzag">
+      <polyline points="4,34 12,24 9,20 19,13 16,8 34,5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M4,30 Q9,33 14,30" fill="none" style="stroke:var(--accent)" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <g id="ic-braid">
+      <path d="M3,10 Q13,5 22,10 T38,10" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M3,20 Q13,15 22,20 T38,20" fill="none" style="stroke:var(--accent-2)" stroke-width="1.8"/>
+      <path d="M3,30 Q13,25 22,30 T38,30" fill="none" stroke="currentColor" stroke-width="1.8"/>
+    </g>
+    <g id="ic-pass">
+      <polyline points="3,32 12,12 21,22 30,9 37,32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <g style="stroke:var(--accent)" stroke-width="1.6" stroke-linecap="round">
+        <line x1="21" y1="16" x2="21" y2="22"/>
+        <line x1="18" y1="19" x2="24" y2="19"/>
+      </g>
+    </g>
+    <g id="ic-glacier">
+      <polygon points="9,32 31,32 20,8" style="fill:var(--accent-2);opacity:.25" stroke="var(--accent-2)" stroke-width="1.5"/>
+      <line x1="14" y1="27" x2="19" y2="19" stroke="currentColor" stroke-width="1.3"/>
+      <line x1="19" y1="27" x2="24" y2="17" stroke="currentColor" stroke-width="1.3"/>
+      <line x1="24" y1="27" x2="27" y2="21" stroke="currentColor" stroke-width="1.3"/>
+    </g>
+    <g id="ic-camp">
+      <rect x="9" y="18" width="12" height="14" fill="none" stroke="currentColor" stroke-width="2"/>
+      <polyline points="7,18 15,7 23,18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <polygon points="25,32 33,32 29,20" style="fill:var(--accent)"/>
+    </g>
+    <g id="ic-summit">
+      <polygon points="5,34 20,6 35,34" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+      <g style="stroke:var(--accent)" stroke-width="1.6" stroke-linecap="round">
+        <line x1="20" y1="6" x2="15" y2="1"/>
+        <line x1="20" y1="6" x2="20" y2="0"/>
+        <line x1="20" y1="6" x2="25" y2="1"/>
+      </g>
+    </g>
+    <g id="ic-forest">
+      <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="10" y1="26" x2="10" y2="34"/>
+        <line x1="20" y1="24" x2="20" y2="34"/>
+        <line x1="30" y1="26" x2="30" y2="34"/>
+      </g>
+      <ellipse cx="10" cy="18" rx="6" ry="9" style="fill:var(--accent-2);opacity:.3" stroke="currentColor" stroke-width="1.4"/>
+      <ellipse cx="20" cy="15" rx="7" ry="10" style="fill:var(--accent-2);opacity:.3" stroke="currentColor" stroke-width="1.4"/>
+      <ellipse cx="30" cy="18" rx="6" ry="9" style="fill:var(--accent-2);opacity:.3" stroke="currentColor" stroke-width="1.4"/>
+    </g>
+    <g id="ic-buffer">
+      <line x1="3" y1="20" x2="14" y2="20" stroke="currentColor" stroke-width="2" stroke-dasharray="3,3" stroke-linecap="round"/>
+      <line x1="26" y1="20" x2="37" y2="20" stroke="currentColor" stroke-width="2" stroke-dasharray="3,3" stroke-linecap="round"/>
+      <circle cx="20" cy="20" r="8" fill="none" stroke="currentColor" stroke-width="2"/>
+      <line x1="20" y1="20" x2="20" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="20" y1="20" x2="24" y2="20" style="stroke:var(--accent)" stroke-width="1.6" stroke-linecap="round"/>
+    </g>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="brand">
+    <h1>Kungsleden</h1>
+    <div class="route mono">Nikkaluokta ⇄ Abisko<br>June 2027</div>
+  </div>
+  <nav class="tabs" role="tablist">
+    <button id="tab-pack" role="tab" aria-selected="true">Pack List</button>
+    <button id="tab-trail" role="tab" aria-selected="false">Trail Days</button>
+  </nav>
+</header>
+
+<main>
+  <section id="view-pack">
+    <div class="people" role="tablist" aria-label="Choose person"></div>
+    <div class="progress-row">
+      <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      <div class="progress-label mono" id="progress-label">0 / 0</div>
+    </div>
+    <div id="categories"></div>
+    <details class="ditty" id="ditty-wrap" hidden>
+      <summary>Ditty bag — Knut's small items <span class="chev">›</span></summary>
+      <div class="ditty-body">
+        <p class="hint">The little stuff sack. Photographed once, never fully trusted since.</p>
+        <ul class="itemlist" id="ditty-list"></ul>
+      </div>
+    </details>
+    <footer class="note">Checks are saved on this phone only.</footer>
+  </section>
+
+  <section id="view-trail" hidden>
+    <figure class="hero-photo">
+      <img src="img/boardwalk-hiker.jpg" alt="Hiker with poles and a full pack walking a wooden boardwalk across open fjäll, mountains ahead.">
+      <figcaption>Typical Kungsleden terrain — boardwalks across the wet stretches, open fjäll all around.</figcaption>
+    </figure>
+    <h2 class="subhead">Route &amp; Elevation</h2>
+    <figure class="map-photo">
+      <img src="img/route-map.jpg" alt="STF map of the full Kungsleden trail from Abisko to Hemavan, with huts marked along the way.">
+      <figcaption>The full Kungsleden, Abisko–Hemavan (STF). Our hike covers the northernmost stretch, Abisko to Kebnekaise, then leaves the main trail for the Nikkaluokta path to finish.</figcaption>
+    </figure>
+    <figure class="elevation-figure">
+      <svg viewBox="0 0 400 220" role="img" aria-label="Elevation profile from Abisko to Nikkaluokta: a gradual climb over three days to Tjäktjapasset at 1150 metres, the trail's high point, then a descent past Alesjaure and Kebnekaise Fjällstation, with a dashed side-trip spur up to Kebnekaise's 2097 metre summit on day 7, before the final descent to Nikkaluokta.">
+        <line x1="34" y1="173" x2="390" y2="173" stroke="var(--line)" stroke-width="1"/>
+        <line x1="34" y1="125" x2="390" y2="125" stroke="var(--line)" stroke-width="1"/>
+        <line x1="34" y1="77" x2="390" y2="77" stroke="var(--line)" stroke-width="1"/>
+        <line x1="34" y1="28" x2="390" y2="28" stroke="var(--line)" stroke-width="1"/>
+        <text x="30" y="176" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="8" fill="var(--text-dim)">500</text>
+        <text x="30" y="128" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="8" fill="var(--text-dim)">1000</text>
+        <text x="30" y="80" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="8" fill="var(--text-dim)">1500</text>
+        <text x="30" y="31" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="8" fill="var(--text-dim)">2000</text>
+        <text x="8" y="16" font-family="IBM Plex Mono, monospace" font-size="8" fill="var(--text-dim)">m</text>
+
+        <line x1="34" y1="192" x2="390" y2="192" stroke="var(--line)" stroke-width="1.2"/>
+        <g font-family="IBM Plex Mono, monospace" font-size="8" fill="var(--text-dim)">
+          <text x="34" y="205" text-anchor="middle">0</text>
+          <text x="101" y="205" text-anchor="middle">20</text>
+          <text x="167" y="205" text-anchor="middle">40</text>
+          <text x="234" y="205" text-anchor="middle">60</text>
+          <text x="300" y="205" text-anchor="middle">80</text>
+          <text x="367" y="205" text-anchor="middle">100</text>
+          <text x="394" y="205" text-anchor="end">km</text>
+        </g>
+
+        <path d="M34,184 L84,173 L154,167 L197,124 L217,110 L237,133 L277,136 L327,153 L390,175 L390,192 L34,192 Z" style="fill:var(--accent-2);opacity:.14" stroke="none"/>
+        <polyline points="34,184 84,173 154,167 197,124 217,110 237,133 277,136 327,153 390,175" fill="none" style="stroke:var(--accent-2)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+
+        <line x1="327" y1="153" x2="345" y2="20" style="stroke:var(--accent)" stroke-width="2" stroke-dasharray="4,3" stroke-linecap="round"/>
+        <polygon points="341,20 349,20 345,10" style="fill:var(--accent)"/>
+        <text x="351" y="17" font-family="IBM Plex Mono, monospace" font-size="9" font-weight="600" style="fill:var(--accent)">2097m</text>
+        <text x="351" y="27" font-family="IBM Plex Sans, sans-serif" font-size="7.5" fill="var(--text-dim)">summit, day 7</text>
+
+        <g stroke="var(--accent-2)" stroke-width="1.8">
+          <line x1="215" y1="106" x2="219" y2="114"/>
+          <line x1="219" y1="106" x2="215" y2="114"/>
+        </g>
+
+        <g font-family="IBM Plex Sans, sans-serif" font-size="9" fill="var(--text)">
+          <text x="36" y="178">Abisko</text>
+          <text x="217" y="100" text-anchor="middle" font-weight="600">Tjäktjapasset · 1150m</text>
+          <text x="327" y="166" text-anchor="middle">Kebnekaise Fjällstation</text>
+          <text x="386" y="168" text-anchor="end">Nikkaluokta</text>
+        </g>
+
+        <g fill="var(--surface)" stroke="var(--accent-2)" stroke-width="2">
+          <circle cx="34" cy="184" r="3.5"/>
+          <circle cx="84" cy="173" r="3"/>
+          <circle cx="154" cy="167" r="3"/>
+          <circle cx="197" cy="124" r="3"/>
+          <circle cx="237" cy="133" r="3"/>
+          <circle cx="277" cy="136" r="3"/>
+          <circle cx="327" cy="153" r="3.5"/>
+          <circle cx="390" cy="175" r="3.5"/>
+        </g>
+      </svg>
+      <figcaption>Approximate elevation, Abisko to Nikkaluokta. The solid line is the 107km trail; the dashed spur is the optional summit push on day 7.</figcaption>
+    </figure>
+    <div class="trail-summary">
+      <div class="stat"><b>107</b><span>km total</span></div>
+      <div class="stat"><b>7+2</b><span>hike + summit/buffer</span></div>
+      <div class="stat"><b>1150</b><span>m high point</span></div>
+    </div>
+
+    <h2 class="subhead">From the Trail</h2>
+    <div class="gallery">
+      <figure>
+        <img src="img/hut-kebnekaise.jpg" alt="STF hut and a tent pitched in a green valley beneath fjäll peaks.">
+        <figcaption>STF hut + tent, fjäll valley</figcaption>
+      </figure>
+      <figure>
+        <img src="img/camp-stream.jpg" alt="Green tent pitched beside a small stream on open tundra, mountains behind.">
+        <figcaption>Camp by a stream</figcaption>
+      </figure>
+      <figure>
+        <img src="img/camp-golden.jpg" alt="Tent pitched on golden autumn tundra with a wide mountain backdrop.">
+        <figcaption>Camp, open fjäll</figcaption>
+      </figure>
+    </div>
+
+    <div class="timeline" id="trail-list"></div>
+    <footer class="note">Times from STF. Self-sufficient, tenting, 3 hikers.</footer>
+  </section>
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  var PEOPLE = [
+    {id:"papa", name:"Knut"},
+    {id:"victor", name:"Victor"},
+    {id:"junior", name:"Junior"}
+  ];
+
+  var CATEGORIES = [
+    { name:"Navigation & Safety", items:[
+      {id:"map", en:"Map (Fjällkartan) + compass", sv:"Karta + kompass", who:["papa"], note:"Don't rely on phone only"},
+      {id:"firstaid", en:"First aid kit", sv:"Första hjälpen-kit", who:["papa"], note:"Plasters, blister pads, painkillers, tape, tweezers"},
+      {id:"blister", en:"Blister plasters (Compeed) + sports tape", sv:"Skavsårsplåster + sporttejp", who:["papa"], note:"Prevent before they form"},
+      {id:"deet", en:"Mosquito repellent (DEET/Saltidin) + head net", sv:"Myggmedel + myggnät", who:["papa"], note:"Fjäll mosquitoes are brutal"},
+      {id:"sun", en:"Sunscreen + lip balm + sunglasses", sv:"Solkräm + cerat + solglasögon", who:["papa"], note:"High-altitude sun"},
+      {id:"earplugs", en:"Earplugs (own pair)", sv:"Öronproppar", who:["papa","victor","junior"], note:"Knut buys 6 pairs for the group"},
+      {id:"powerbank", en:"Power bank + charging cables", sv:"Powerbank + laddkablar", who:["papa","victor","junior"], note:"No charging on the trail"},
+      {id:"headlamp", en:"Headlamp + spare batteries", sv:"Pannlampa + extrabatterier", who:["papa","victor","junior"]},
+      {id:"whistle", en:"Whistle + emergency bivy / space blanket", sv:"Visselpipa + nödbivack", who:["papa"]}
+    ]},
+    { name:"Pack & Sleep", items:[
+      {id:"backpack", en:"Backpack 50–65L + rain cover", sv:"Ryggsäck + regnskydd", who:["papa","victor","junior"], note:"One each"},
+      {id:"tent3", en:"Tent (3-person)", sv:"Tält (3-manna)", who:["papa"], note:"Decided: tenting, no huts"},
+      {id:"tent2", en:"Tent (2-person)", sv:"Tält (2-manna)", who:["victor"]},
+      {id:"sleepbag", en:"Sleeping bag (comfort ~0°C)", sv:"Sovsäck, komfort ~0°C", who:["papa","victor","junior"], note:"Cold even in July"},
+      {id:"mat", en:"Sleeping mat", sv:"Liggunderlag", who:["papa","victor","junior"]},
+      {id:"sitpad", en:"Sit pad", sv:"Sittunderlag", who:["papa","victor","junior"], note:"STF recommends it — nice at breaks"},
+      {id:"drybags", en:"Waterproof dry bags", sv:"Vattentäta packpåsar", who:["papa","victor","junior"], note:"Keeps clothes + sleeping bag dry"}
+    ]},
+    { name:"Cook, Food & Water", items:[
+      {id:"stove", en:"Stove + gas + lighter / firesteel", sv:"Stormkök + gas + tändare", who:["papa"]},
+      {id:"potmug", en:"Pot / mug / spork", sv:"Kastrull / kåsa / spork", who:["papa","victor","junior"]},
+      {id:"plate", en:"Plate/bowl + cutlery", sv:"Tallrik/skål + bestick", who:["papa","victor","junior"], note:"STF recommended"},
+      {id:"thermos", en:"Thermos", sv:"Termos", who:["papa","victor","junior"], note:"Hot drink on the trail"},
+      {id:"food", en:"Food / freeze-dried meals", sv:"Mat / frystorkat", who:["papa"], note:"Plan per day + extra"},
+      {id:"water", en:"Water bottle (min 1.5L) + water treatment", sv:"Vattenflaska + vattenrening", who:["papa","victor","junior"]}
+    ]},
+    { name:"Kitchen & Gas — self-sufficient", items:[
+      {id:"windscreen", en:"Windscreen for stove", sv:"Vindskydd till köket", who:["papa"], note:"Fjäll wind eats gas without it"},
+      {id:"bigpot", en:"Bigger shared pot (gas-efficient)", sv:"Större delad kastrull", who:["papa"], note:"One large pot beats three small"},
+      {id:"gas", en:"Gas: 3×450g (7-day) / 4×450g (9-day w/ summit)", sv:"Gas 3–4×450g", who:["papa"], note:"~45g/person/day. Buy in Kiruna/Abisko — can't fly with gas. Refill at Abiskojaure, Alesjaure, Sälka"}
+    ]},
+    { name:"Clothing (layers)", items:[
+      {id:"rainjacket", en:"Rain jacket + rain trousers", sv:"Regnjacka + regnbyxor", who:["papa","victor","junior"], note:"MUST — not optional"},
+      {id:"midlayer", en:"Warm midlayer (fleece/down)", sv:"Varmt mellanlager", who:["papa","victor","junior"]},
+      {id:"hatgloves", en:"Hat + gloves (2 pairs: thin + warm)", sv:"Mössa/buff + vantar", who:["papa","victor","junior"], note:"Yes, even in summer"},
+      {id:"baselayer", en:"Base layers + spare (wool)", sv:"Underställ + ombyte", who:["papa","victor","junior"]},
+      {id:"socks", en:"Wool socks (thin + thick) + spares", sv:"Ullsockor + ombyten", who:["papa","victor","junior"], note:"Blister prevention"},
+      {id:"boots", en:"Broken-in hiking boots (waterproof)", sv:"Inbrutna vandringskängor", who:["papa","victor","junior"]},
+      {id:"campshoes", en:"Camp shoes / sandals", sv:"Lägerskor / sandaler", who:["papa","victor","junior"]},
+      {id:"gaiters", en:"Gaiters", sv:"Gamasjer", who:["papa","victor","junior"], note:"Boggy/wet sections"},
+      {id:"tshirts", en:"T-shirts (1–2)", sv:"T-shirt", who:["papa","victor","junior"]},
+      {id:"shorts", en:"Shorts (warm weather)", sv:"Shorts", who:["papa","victor","junior"]},
+      {id:"underwear", en:"Underwear + spares", sv:"Underkläder + ombyten", who:["papa","victor","junior"]},
+      {id:"swim", en:"Swimwear", sv:"Badkläder", who:["papa","victor","junior"], note:"For a dip in fjäll lakes, e.g. Abiskojaure"}
+    ]},
+    { name:"Fords — June meltwater", items:[
+      {id:"wading", en:"Wading shoes / sturdy sandals", sv:"Vadarskor / kraftiga sandaler", who:["papa","victor","junior"], note:"Late-June meltwater means several fords. Never wade in boots. Doubles as camp shoes."}
+    ]},
+    { name:"Hygiene", items:[
+      {id:"towel", en:"Light travel towel", sv:"Lätt resehandduk", who:["papa","victor","junior"]},
+      {id:"toothbrush", en:"Toothbrush + toothpaste", sv:"Tandborste + tandkräm", who:["papa","victor","junior"]},
+      {id:"trowel", en:"Trowel (toilet) + toilet paper", sv:"Spade + toapapper", who:["papa"], note:"Bury it"},
+      {id:"soap", en:"Soap/shampoo (biodegradable)", sv:"Tvål/schampo, miljövänligt", who:["papa"]}
+    ]},
+    { name:"Misc", items:[
+      {id:"cash", en:"Cash/card (emergency/provisions)", sv:"Kontanter/kort", who:["papa"]},
+      {id:"trash", en:"Trash bags (pack out)", sv:"Sopåsar", who:["papa"]},
+      {id:"poles", en:"Trekking poles", sv:"Vandringsstavar", who:["papa","victor","junior"], note:"Easy on the knees, helps at fords"},
+      {id:"camera", en:"Camera / phone", sv:"Kamera / mobil", who:["papa","victor","junior"]}
+    ]}
+  ];
+
+  var DITTY = [
+    {id:"d-lamp1", en:"Headlamp — Silva (blue)", sv:"Pannlampa — Silva (blå)"},
+    {id:"d-lamp2", en:"Headlamp — black, red light (Silva)", sv:"Pannlampa — svart, rött ljus", note:"spare batteries too"},
+    {id:"d-earplugs", en:"Earplugs (CE-certified)", sv:"Öronproppar (CE-märkta)", note:"you, Victor, Junior"},
+    {id:"d-knife", en:"Folding knife", sv:"Fällkniv"},
+    {id:"d-lighter", en:"Gas lighter (Primus, red)", sv:"Gaständare"},
+    {id:"d-matches1", en:"Matches — Solstickan", sv:"Tändstickor"},
+    {id:"d-matches2", en:"Matches — Golden Crown (spare)", sv:"Tändstickor, reserv"},
+    {id:"d-ziploc", en:"Ziploc / freezer bags", sv:"Fryspåsar", note:"waterproofing"},
+    {id:"d-deet", en:"Mosquito repellent — Djungelolja (DEET)", sv:"Myggmedel", note:"tick / mosquito / midge"},
+    {id:"d-wash", en:"Sea to Summit Wilderness Wash", sv:"Biologisk multitvål", note:"Leave No Trace"},
+    {id:"d-rollon", en:"Mosquito + tick roll-on", sv:"Sjö & Hav roll-on", note:"plant-based"},
+    {id:"d-salvequick", en:"Plasters — Salvequick", sv:"Salvequick-plåster"},
+    {id:"d-alvedon", en:"Paracetamol — Alvedon", sv:"Alvedon"},
+    {id:"d-ibu", en:"Ibuprofen 400mg", sv:"Ibuprofen"},
+    {id:"d-compeed", en:"Compeed blister plasters", sv:"Compeed blåsplåster"},
+    {id:"d-leukoplast", en:"Sports tape — Leukoplast", sv:"Leukoplast sporttejp"},
+    {id:"d-decubal", en:"Decubal cream + lip balm", sv:"Decubal + läppcerat"},
+    {id:"d-toes", en:"Toe protectors / tube bandage", sv:"Fingertossar / rörgasbinda"},
+    {id:"d-clippers", en:"Nail clippers", sv:"Nagelklippare"},
+    {id:"d-gauze", en:"Compress / gauze bandage", sv:"Kompress/gasbinda"},
+    {id:"d-samarin", en:"Samarin (heartburn / upset stomach)", sv:"Samarin", note:"3 sachets"},
+    {id:"d-semper", en:"Rehydration salts, orange", sv:"Semper Vätskeersättning+"},
+    {id:"d-tripod", en:"Mini tripod (Gorillapod) + phone holder", sv:"Ministativ + telefonhållare"},
+    {id:"d-toothpaste", en:"Toothpaste — Oral-B 3D White", sv:"Tandkräm"},
+    {id:"d-paracord", en:"Paracord bracelet, orange", sv:"Paracord-armband", note:"emergency line"},
+    {id:"d-straps", en:"Elastic straps with hooks", sv:"Resårband med krokar", note:"secures gear / tent"},
+    {id:"d-bags", en:"Blue trash bags", sv:"Blå soppåsar"},
+    {id:"d-medicine", en:"Prescription medication", sv:"Receptmedicin", note:"confirm before departure"},
+    {id:"d-firestarter", en:"Firestarter blocks (brown)", sv:"Tändblock", note:"unconfirmed — might just be snacks"},
+    {id:"d-firestarter2", en:"Firestarter blocks — top up", sv:"Tändblock, påfyllning", note:"there's more in the car"}
+  ];
+
+  var TRAIL = [
+    {n:1, stage:"Abisko → Abiskojaure", km:15, time:"4–6h", note:"Through Abisko national park, past Lapporten. Park tenting rules apply — camp at Abiskojaure. Shop (limited).", badges:[], icon:"gate"},
+    {n:2, stage:"Abiskojaure → Alesjaure", km:21, time:"6–8h", note:"The longest day. Kieron slope is steep. A boat shortens it by 6km. Shop (limited).", badges:["longest"], icon:"zigzag"},
+    {n:3, stage:"Alesjaure → Tjäktja", km:13, time:"4–5h", note:"Delta landscape, easy walking. No shop — carry food.", badges:["noshop"], icon:"braid"},
+    {n:4, stage:"Tjäktja → Sälka", km:12, time:"3–5h", note:"Over Tjäktja pass, 1150m — the trail's highest point. Snow can linger into June. Shop (limited).", badges:["high"], icon:"pass"},
+    {n:5, stage:"Sälka → Singi", km:12, time:"3–4h", note:"Tjäktja valley, glaciers in view. No shop — carry food.", badges:["noshop"], icon:"glacier"},
+    {n:6, stage:"Singi → Kebnekaise Fjällstation", km:15, time:"4–5h", note:"Leaves the Kungsleden proper. Camp here — base for the summit push. Shop + restaurant.", badges:[], icon:"camp"},
+    {n:7, stage:"Summit — Kebnekaise south peak (2097m)", km:"18 rt", time:"10–15h", note:"A day of its own, roughly 1800m of climbing. Light day-pack from camp. Weather-dependent — an STF guide is recommended.", badges:["summit"], summit:true, icon:"summit"},
+    {n:8, stage:"Kebnekaise → Nikkaluokta", km:19, time:"5–7h", note:"Second-longest day. Birch forest most of the way. A boat shortens it by 6km. Bus onward to Kiruna.", badges:["longest"], icon:"forest"},
+    {n:9, stage:"Buffer — weather day / margin", km:"—", time:"—", note:"If the summit gets blown out on day 7: summit on day 8 instead, walk out on day 9.", badges:["buffer"], buffer:true, icon:"buffer"}
+  ];
+
+  var BADGE_LABEL = {longest:"Longest day", noshop:"No shop", high:"High point", summit:"Summit day", buffer:"Buffer"};
+
+  // ---------- state ----------
+  var state = {tab:"pack", person:"papa", checked:{papa:{},victor:{},junior:{},ditty:{}}};
+
+  function load(){
+    try{
+      var raw = localStorage.getItem("kungsleden-state-v1");
+      if(raw){
+        var saved = JSON.parse(raw);
+        if(saved && typeof saved === "object"){
+          if(saved.person) state.person = saved.person;
+          if(saved.tab) state.tab = saved.tab;
+          if(saved.checked) state.checked = Object.assign(state.checked, saved.checked);
+        }
+      }
+    }catch(e){}
+  }
+  function save(){
+    try{ localStorage.setItem("kungsleden-state-v1", JSON.stringify(state)); }catch(e){}
+  }
+
+  // ---------- rendering ----------
+  var peopleWrap = document.querySelector(".people");
+  var categoriesWrap = document.getElementById("categories");
+  var progressFill = document.getElementById("progress-fill");
+  var progressLabel = document.getElementById("progress-label");
+  var dittyWrap = document.getElementById("ditty-wrap");
+  var dittyList = document.getElementById("ditty-list");
+  var trailList = document.getElementById("trail-list");
+
+  function countFor(personId){
+    var total = 0, done = 0;
+    CATEGORIES.forEach(function(cat){
+      cat.items.forEach(function(item){
+        if(item.who.indexOf(personId) !== -1){
+          total++;
+          if(state.checked[personId][item.id]) done++;
+        }
+      });
+    });
+    return {total:total, done:done};
+  }
+
+  function renderPeople(){
+    peopleWrap.innerHTML = "";
+    PEOPLE.forEach(function(p){
+      var c = countFor(p.id);
+      var btn = document.createElement("button");
+      btn.setAttribute("role","tab");
+      btn.setAttribute("aria-pressed", state.person === p.id ? "true" : "false");
+      btn.innerHTML = '<span class="name">'+p.name+'</span><span class="count mono">'+c.done+' / '+c.total+'</span>';
+      btn.addEventListener("click", function(){
+        state.person = p.id;
+        save();
+        renderAll();
+      });
+      peopleWrap.appendChild(btn);
+    });
+  }
+
+  function itemRow(item, personKey, sv){
+    var li = document.createElement("li");
+    li.className = "item";
+    var isDone = !!state.checked[personKey][item.id];
+    if(isDone) li.className += " done";
+    var label = document.createElement("label");
+    var cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.checked = isDone;
+    cb.id = "chk-"+personKey+"-"+item.id;
+    cb.addEventListener("change", function(){
+      state.checked[personKey][item.id] = cb.checked;
+      save();
+      li.classList.toggle("done", cb.checked);
+      renderPeople();
+      renderProgress();
+    });
+    var txt = document.createElement("div");
+    txt.className = "txt";
+    var enDiv = document.createElement("div");
+    enDiv.className = "en";
+    enDiv.textContent = item.en;
+    txt.appendChild(enDiv);
+    if(item.sv){
+      var svDiv = document.createElement("div");
+      svDiv.className = "sv";
+      svDiv.textContent = item.sv;
+      txt.appendChild(svDiv);
+    }
+    if(item.note){
+      var noteDiv = document.createElement("div");
+      noteDiv.className = "note";
+      noteDiv.textContent = item.note;
+      txt.appendChild(noteDiv);
+    }
+    label.appendChild(cb);
+    label.appendChild(txt);
+    li.appendChild(label);
+    return li;
+  }
+
+  function renderCategories(){
+    categoriesWrap.innerHTML = "";
+    var personId = state.person;
+    CATEGORIES.forEach(function(cat){
+      var relevant = cat.items.filter(function(item){ return item.who.indexOf(personId) !== -1; });
+      if(!relevant.length) return;
+      var sec = document.createElement("section");
+      sec.className = "category";
+      var h2 = document.createElement("h2");
+      h2.textContent = cat.name;
+      sec.appendChild(h2);
+      var ul = document.createElement("ul");
+      ul.className = "itemlist";
+      relevant.forEach(function(item){ ul.appendChild(itemRow(item, personId, true)); });
+      sec.appendChild(ul);
+      categoriesWrap.appendChild(sec);
+    });
+  }
+
+  function renderDitty(){
+    var show = state.person === "papa";
+    dittyWrap.hidden = !show;
+    if(!show) return;
+    dittyList.innerHTML = "";
+    DITTY.forEach(function(item){ dittyList.appendChild(itemRow(item, "ditty", false)); });
+  }
+
+  function renderProgress(){
+    var c = countFor(state.person);
+    var pct = c.total ? Math.round((c.done / c.total) * 100) : 0;
+    progressFill.style.width = pct + "%";
+    progressLabel.textContent = c.done + " / " + c.total + " packed";
+  }
+
+  function renderTrail(){
+    trailList.innerHTML = "";
+    TRAIL.forEach(function(d){
+      var div = document.createElement("div");
+      div.className = "day" + (d.summit ? " summit" : "") + (d.buffer ? " buffer" : "");
+      div.setAttribute("data-n", d.buffer ? "B" : d.n);
+      var badgesHtml = d.badges.map(function(b){
+        return '<span class="badge '+b+'">'+BADGE_LABEL[b]+'</span>';
+      }).join("");
+      div.innerHTML =
+        '<div class="head"><span class="stage">Day '+(d.buffer? "9" : d.n)+' · '+d.stage+'</span>'+
+        '<svg class="day-icon" viewBox="0 0 40 40" role="img" aria-hidden="true"><use href="#ic-'+d.icon+'"></use></svg></div>'+
+        '<div class="stats"><span><b>'+d.km+'</b> km</span><span><b>'+d.time+'</b></span></div>'+
+        '<div class="note">'+d.note+'</div>'+
+        (badgesHtml ? '<div class="badges">'+badgesHtml+'</div>' : "");
+      trailList.appendChild(div);
+    });
+  }
+
+  function renderAll(){
+    renderPeople();
+    renderCategories();
+    renderDitty();
+    renderProgress();
+  }
+
+  // ---------- tabs ----------
+  var tabPack = document.getElementById("tab-pack");
+  var tabTrail = document.getElementById("tab-trail");
+  var viewPack = document.getElementById("view-pack");
+  var viewTrail = document.getElementById("view-trail");
+
+  function setTab(tab){
+    state.tab = tab;
+    save();
+    var isPack = tab === "pack";
+    tabPack.setAttribute("aria-selected", isPack ? "true" : "false");
+    tabTrail.setAttribute("aria-selected", isPack ? "false" : "true");
+    viewPack.hidden = !isPack;
+    viewTrail.hidden = isPack;
+  }
+  tabPack.addEventListener("click", function(){ setTab("pack"); });
+  tabTrail.addEventListener("click", function(){ setTab("trail"); });
+
+  // ---------- boot ----------
+  load();
+  setTab(state.tab);
+  renderAll();
+  renderTrail();
+})();
+</script>
+</body>
+</html>
