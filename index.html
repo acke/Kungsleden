@@ -13,8 +13,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
   :root{
-    padding-top:env(safe-area-inset-top,0px);
-    padding-bottom:env(safe-area-inset-bottom,0px);
     --bg:#eef1ec;
     --surface:#ffffff;
     --surface-2:#e4e9e1;
@@ -60,9 +58,8 @@
   }
 
   *{box-sizing:border-box;}
-  html,body{margin:0;}
-  img{max-width:100%;}
   body{
+    margin:0;
     background:var(--bg);
     color:var(--text);
     font-family:"IBM Plex Sans",system-ui,sans-serif;
@@ -130,6 +127,42 @@
     background:var(--surface);
     color:var(--text);
     box-shadow:0 1px 3px rgba(0,0,0,.08);
+  }
+
+  .route-toggle{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+    background:var(--surface-2);
+    border-radius:12px;
+    padding:4px;
+    margin-bottom:16px;
+  }
+  .route-toggle button{
+    appearance:none;
+    border:none;
+    background:transparent;
+    color:var(--text-dim);
+    font-family:"IBM Plex Sans",sans-serif;
+    font-weight:600;
+    font-size:.76rem;
+    letter-spacing:.02em;
+    padding:9px 4px;
+    border-radius:9px;
+    cursor:pointer;
+    line-height:1.25;
+  }
+  .route-toggle button[aria-selected="true"]{
+    background:var(--surface);
+    color:var(--text);
+    box-shadow:0 1px 3px rgba(0,0,0,.08);
+  }
+  .route-toggle button small{
+    display:block;
+    font-size:.64rem;
+    font-weight:500;
+    color:var(--text-dim);
+    letter-spacing:0;
   }
 
   main{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px));}
@@ -479,7 +512,6 @@
 </style>
 </head>
 <body>
-
 <svg style="position:absolute;width:0;height:0" aria-hidden="true">
   <defs>
     <g id="ic-gate">
@@ -532,6 +564,13 @@
       <ellipse cx="20" cy="15" rx="7" ry="10" style="fill:var(--accent-2);opacity:.3" stroke="currentColor" stroke-width="1.4"/>
       <ellipse cx="30" cy="18" rx="6" ry="9" style="fill:var(--accent-2);opacity:.3" stroke="currentColor" stroke-width="1.4"/>
     </g>
+    <g id="ic-boat">
+      <path d="M8,24 L32,24 L27,31 L13,31 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <line x1="20" y1="24" x2="20" y2="9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <polygon points="20,10 20,18 28,14" style="fill:var(--accent)"/>
+      <path d="M3,31 Q9,34.5 15,31" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M25,31 Q31,34.5 37,31" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    </g>
     <g id="ic-buffer">
       <line x1="3" y1="20" x2="14" y2="20" stroke="currentColor" stroke-width="2" stroke-dasharray="3,3" stroke-linecap="round"/>
       <line x1="26" y1="20" x2="37" y2="20" stroke="currentColor" stroke-width="2" stroke-dasharray="3,3" stroke-linecap="round"/>
@@ -576,12 +615,18 @@
       <img src="img/boardwalk-hiker.jpg" alt="Hiker with poles and a full pack walking a wooden boardwalk across open fjäll, mountains ahead.">
       <figcaption>Typical Kungsleden terrain — boardwalks across the wet stretches, open fjäll all around.</figcaption>
     </figure>
+    <div class="route-toggle" role="tablist" aria-label="Choose route">
+      <button id="route-abisko" role="tab" data-route="abisko">Abisko route<small>Abisko → Nikkaluokta</small></button>
+      <button id="route-saltoluokta" role="tab" data-route="saltoluokta">Saltoluokta route<small>Saltoluokta → Nikkaluokta</small></button>
+    </div>
+
     <h2 class="subhead">Route &amp; Elevation</h2>
     <figure class="map-photo">
       <img src="img/route-map.png" alt="Map of the full Kungsleden trail from Abisko fjällstation to Hemavan, with every hut marked along the route.">
-      <figcaption>The full Kungsleden, Abisko–Hemavan. Our hike covers the northernmost stretch — Abisko fjällstation down through Sälkastugan and Kebnekaise fjällstation — then leaves the marked trail for the Nikkaluokta path to finish.</figcaption>
+      <figcaption id="map-caption">The full Kungsleden, Abisko–Hemavan. Our hike covers the northernmost stretch — Abisko fjällstation down through Sälkastugan and Kebnekaise fjällstation — then leaves the marked trail for the Nikkaluokta path to finish.</figcaption>
     </figure>
-    <figure class="elevation-figure">
+
+    <figure class="elevation-figure" id="elev-abisko">
       <svg viewBox="0 0 400 220" role="img" aria-label="Elevation profile from Abisko to Nikkaluokta: a gradual climb over three days to Tjäktjapasset at 1150 metres, the trail's high point, then a descent past Alesjaure and Kebnekaise Fjällstation, with a dashed side-trip spur up to Kebnekaise's 2097 metre summit on day 7, before the final descent to Nikkaluokta.">
         <line x1="34" y1="173" x2="390" y2="173" stroke="var(--line)" stroke-width="1"/>
         <line x1="34" y1="125" x2="390" y2="125" stroke="var(--line)" stroke-width="1"/>
@@ -637,10 +682,67 @@
       </svg>
       <figcaption>Approximate elevation, Abisko to Nikkaluokta. The solid line is the 107km trail; the dashed spur is the optional summit push on day 7.</figcaption>
     </figure>
+
+    <figure class="elevation-figure" id="elev-saltoluokta" hidden>
+      <svg viewBox="0 0 400 220" role="img" aria-label="Elevation profile from Saltoluokta to Nikkaluokta: a gentler, lake-and-forest approach with two boat crossings, rising to join the Abisko route near Singi, then Kebnekaise Fjällstation, a dashed side-trip spur up to the 2097 metre summit, and the final descent to Nikkaluokta.">
+        <line x1="34" y1="173" x2="390" y2="173" stroke="var(--line)" stroke-width="1"/>
+        <line x1="34" y1="125" x2="390" y2="125" stroke="var(--line)" stroke-width="1"/>
+        <line x1="34" y1="77" x2="390" y2="77" stroke="var(--line)" stroke-width="1"/>
+        <line x1="34" y1="28" x2="390" y2="28" stroke="var(--line)" stroke-width="1"/>
+        <text x="30" y="176" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="8" fill="var(--text-dim)">500</text>
+        <text x="30" y="128" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="8" fill="var(--text-dim)">1000</text>
+        <text x="30" y="80" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="8" fill="var(--text-dim)">1500</text>
+        <text x="30" y="31" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="8" fill="var(--text-dim)">2000</text>
+        <text x="8" y="16" font-family="IBM Plex Mono, monospace" font-size="8" fill="var(--text-dim)">m</text>
+
+        <line x1="34" y1="192" x2="390" y2="192" stroke="var(--line)" stroke-width="1.2"/>
+        <g font-family="IBM Plex Mono, monospace" font-size="8" fill="var(--text-dim)">
+          <text x="34" y="205" text-anchor="middle">0</text>
+          <text x="88" y="205" text-anchor="middle">13</text>
+          <text x="135" y="205" text-anchor="middle">24</text>
+          <text x="193" y="205" text-anchor="middle">38</text>
+          <text x="248" y="205" text-anchor="middle">51</text>
+          <text x="310" y="205" text-anchor="middle">66</text>
+          <text x="368" y="205" text-anchor="middle">85</text>
+          <text x="394" y="205" text-anchor="end">km</text>
+        </g>
+
+        <path d="M34,172 L88,168 L135,160 L193,157 L248,136 L310,153 L390,175 L390,192 L34,192 Z" style="fill:var(--accent-2);opacity:.14" stroke="none"/>
+        <polyline points="34,172 88,168 135,160 193,157 248,136 310,153 390,175" fill="none" style="stroke:var(--accent-2)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+
+        <line x1="310" y1="153" x2="328" y2="20" style="stroke:var(--accent)" stroke-width="2" stroke-dasharray="4,3" stroke-linecap="round"/>
+        <polygon points="324,20 332,20 328,10" style="fill:var(--accent)"/>
+        <text x="334" y="17" font-family="IBM Plex Mono, monospace" font-size="9" font-weight="600" style="fill:var(--accent)">2097m</text>
+        <text x="334" y="27" font-family="IBM Plex Sans, sans-serif" font-size="7.5" fill="var(--text-dim)">summit, day 6</text>
+
+        <g stroke="var(--accent-2)" stroke-width="1.3" fill="none">
+          <path d="M82,178 Q88,181.5 94,178"/>
+          <path d="M129,170 Q135,173.5 141,170"/>
+        </g>
+
+        <g font-family="IBM Plex Sans, sans-serif" font-size="9" fill="var(--text)">
+          <text x="36" y="166">Saltoluokta</text>
+          <text x="248" y="130" text-anchor="middle" font-weight="600">Singi</text>
+          <text x="310" y="166" text-anchor="middle">Kebnekaise Fjällstation</text>
+          <text x="386" y="168" text-anchor="end">Nikkaluokta</text>
+        </g>
+
+        <g fill="var(--surface)" stroke="var(--accent-2)" stroke-width="2">
+          <circle cx="34" cy="172" r="3.5"/>
+          <circle cx="88" cy="168" r="3"/>
+          <circle cx="135" cy="160" r="3"/>
+          <circle cx="193" cy="157" r="3"/>
+          <circle cx="248" cy="136" r="3"/>
+          <circle cx="310" cy="153" r="3.5"/>
+          <circle cx="390" cy="175" r="3.5"/>
+        </g>
+      </svg>
+      <figcaption>Approximate elevation, Saltoluokta to Nikkaluokta. Gentler than the Abisko route, but with two lake crossings by boat en route to Kaitumjaure. Joins the Abisko route at Singi.</figcaption>
+    </figure>
     <div class="trail-summary">
-      <div class="stat"><b>107</b><span>km total</span></div>
-      <div class="stat"><b>7+2</b><span>hike + summit/buffer</span></div>
-      <div class="stat"><b>1150</b><span>m high point</span></div>
+      <div class="stat"><b id="stat-km">107</b><span>km total</span></div>
+      <div class="stat"><b id="stat-days">7+2</b><span>hike + summit/buffer</span></div>
+      <div class="stat"><b id="stat-high">1150</b><span>m high point</span></div>
     </div>
 
     <h2 class="subhead">From the Trail</h2>
@@ -772,22 +874,48 @@
     {id:"d-firestarter2", en:"Firestarter blocks — top up", sv:"Tändblock, påfyllning", note:"there's more in the car"}
   ];
 
-  var TRAIL = [
-    {n:1, stage:"Abisko → Abiskojaure", km:15, time:"4–6h", note:"Through Abisko national park, past Lapporten. Park tenting rules apply — camp at Abiskojaure. Shop (limited).", badges:[], icon:"gate"},
-    {n:2, stage:"Abiskojaure → Alesjaure", km:21, time:"6–8h", note:"The longest day. Kieron slope is steep. A boat shortens it by 6km. Shop (limited).", badges:["longest"], icon:"zigzag"},
-    {n:3, stage:"Alesjaure → Tjäktja", km:13, time:"4–5h", note:"Delta landscape, easy walking. No shop — carry food.", badges:["noshop"], icon:"braid"},
-    {n:4, stage:"Tjäktja → Sälka", km:12, time:"3–5h", note:"Over Tjäktja pass, 1150m — the trail's highest point. Snow can linger into June. Shop (limited).", badges:["high"], icon:"pass"},
-    {n:5, stage:"Sälka → Singi", km:12, time:"3–4h", note:"Tjäktja valley, glaciers in view. No shop — carry food.", badges:["noshop"], icon:"glacier"},
-    {n:6, stage:"Singi → Kebnekaise Fjällstation", km:15, time:"4–5h", note:"Leaves the Kungsleden proper. Camp here — base for the summit push. Shop + restaurant.", badges:[], icon:"camp"},
-    {n:7, stage:"Summit — Kebnekaise south peak (2097m)", km:"18 rt", time:"10–15h", note:"A day of its own, roughly 1800m of climbing. Light day-pack from camp. Weather-dependent — an STF guide is recommended.", badges:["summit"], summit:true, icon:"summit"},
-    {n:8, stage:"Kebnekaise → Nikkaluokta", km:19, time:"5–7h", note:"Second-longest day. Birch forest most of the way. A boat shortens it by 6km. Bus onward to Kiruna.", badges:["longest"], icon:"forest"},
-    {n:9, stage:"Buffer — weather day / margin", km:"—", time:"—", note:"If the summit gets blown out on day 7: summit on day 8 instead, walk out on day 9.", badges:["buffer"], buffer:true, icon:"buffer"}
-  ];
+  var ROUTES = {
+    abisko: {
+      label: "Abisko",
+      totalKm: 107,
+      dayStat: "7+2",
+      highPoint: 1150,
+      mapCaption: "The full Kungsleden, Abisko–Hemavan. Our hike covers the northernmost stretch — Abisko fjällstation down through Sälkastugan and Kebnekaise fjällstation — then leaves the marked trail for the Nikkaluokta path to finish.",
+      days: [
+        {n:1, stage:"Abisko → Abiskojaure", km:15, time:"4–6h", note:"Through Abisko national park, past Lapporten. Park tenting rules apply — camp at Abiskojaure. Shop (limited).", badges:[], icon:"gate"},
+        {n:2, stage:"Abiskojaure → Alesjaure", km:21, time:"6–8h", note:"The longest day. Kieron slope is steep. A boat shortens it by 6km. Shop (limited).", badges:["longest"], icon:"zigzag"},
+        {n:3, stage:"Alesjaure → Tjäktja", km:13, time:"4–5h", note:"Delta landscape, easy walking. No shop — carry food.", badges:["noshop"], icon:"braid"},
+        {n:4, stage:"Tjäktja → Sälka", km:12, time:"3–5h", note:"Over Tjäktja pass, 1150m — the trail's highest point. Snow can linger into June. Shop (limited).", badges:["high"], icon:"pass"},
+        {n:5, stage:"Sälka → Singi", km:12, time:"3–4h", note:"Tjäktja valley, glaciers in view. No shop — carry food.", badges:["noshop"], icon:"glacier"},
+        {n:6, stage:"Singi → Kebnekaise Fjällstation", km:15, time:"4–5h", note:"Leaves the Kungsleden proper. Camp here — base for the summit push. Shop + restaurant.", badges:[], icon:"camp"},
+        {n:7, stage:"Summit — Kebnekaise south peak (2097m)", km:"18 rt", time:"10–15h", note:"A day of its own, roughly 1800m of climbing. Light day-pack from camp. Weather-dependent — an STF guide is recommended.", badges:["summit"], summit:true, icon:"summit"},
+        {n:8, stage:"Kebnekaise → Nikkaluokta", km:19, time:"5–7h", note:"Second-longest day. Birch forest most of the way. A boat shortens it by 6km. Bus onward to Kiruna.", badges:["longest"], icon:"forest"},
+        {n:9, stage:"Buffer — weather day / margin", km:"—", time:"—", note:"If the summit gets blown out on day 7: summit on day 8 instead, walk out on day 9.", badges:["buffer"], buffer:true, icon:"buffer"}
+      ]
+    },
+    saltoluokta: {
+      label: "Saltoluokta",
+      totalKm: 85,
+      dayStat: "6+2",
+      highPoint: 880,
+      mapCaption: "The full Kungsleden, Abisko–Hemavan. This option starts further south, at Saltoluokta fjällstation, and heads north through lake country to join the Abisko route at Singi, then on to Kebnekaise.",
+      days: [
+        {n:1, stage:"Saltoluokta → Vakkotavare", km:13, time:"4–6h", note:"A boat across Lake Langas is needed just to reach the trailhead — book ahead, it runs to a schedule outside peak season.", badges:[], icon:"boat"},
+        {n:2, stage:"Vakkotavare → Teusajaure", km:11, time:"4–6h", note:"A steep climb over the ridge above Vakkotavare, then a self-service rowing boat across Teusajaure lake.", badges:[], icon:"boat"},
+        {n:3, stage:"Teusajaure → Kaitumjaure", km:14, time:"5–7h", note:"Quiet birch forest, one of the least-trafficked stretches of the whole Kungsleden. Shop (limited).", badges:["noshop"], icon:"forest"},
+        {n:4, stage:"Kaitumjaure → Singi", km:13, time:"4–6h", note:"Open fjäll walking. Joins the Abisko route here — same trail onward to Kebnekaise.", badges:[], icon:"braid"},
+        {n:5, stage:"Singi → Kebnekaise Fjällstation", km:15, time:"4–5h", note:"Same final approach as the Abisko route. Shop + restaurant at Kebnekaise.", badges:[], icon:"camp"},
+        {n:6, stage:"Summit — Kebnekaise south peak (2097m)", km:"18 rt", time:"10–15h", note:"A day of its own, roughly 1800m of climbing. Light day-pack from camp. Weather-dependent — an STF guide is recommended.", badges:["summit"], summit:true, icon:"summit"},
+        {n:7, stage:"Kebnekaise → Nikkaluokta", km:19, time:"5–7h", note:"Birch forest most of the way. A boat shortens it by 6km. Bus onward to Kiruna.", badges:["longest"], icon:"forest"},
+        {n:8, stage:"Buffer — weather day / margin", km:"—", time:"—", note:"If the summit gets blown out on day 6: summit on day 7 instead, walk out on day 8.", badges:["buffer"], buffer:true, icon:"buffer"}
+      ]
+    }
+  };
 
   var BADGE_LABEL = {longest:"Longest day", noshop:"No shop", high:"High point", summit:"Summit day", buffer:"Buffer"};
 
   // ---------- state ----------
-  var state = {tab:"pack", person:"papa", checked:{papa:{},victor:{},junior:{},ditty:{}}};
+  var state = {tab:"pack", person:"papa", route:"abisko", checked:{papa:{},victor:{},junior:{},ditty:{}}};
 
   function load(){
     try{
@@ -797,6 +925,7 @@
         if(saved && typeof saved === "object"){
           if(saved.person) state.person = saved.person;
           if(saved.tab) state.tab = saved.tab;
+          if(saved.route && ROUTES[saved.route]) state.route = saved.route;
           if(saved.checked) state.checked = Object.assign(state.checked, saved.checked);
         }
       }
@@ -814,6 +943,12 @@
   var dittyWrap = document.getElementById("ditty-wrap");
   var dittyList = document.getElementById("ditty-list");
   var trailList = document.getElementById("trail-list");
+  var mapCaption = document.getElementById("map-caption");
+  var statKm = document.getElementById("stat-km");
+  var statDays = document.getElementById("stat-days");
+  var statHigh = document.getElementById("stat-high");
+  var elevFigures = {abisko: document.getElementById("elev-abisko"), saltoluokta: document.getElementById("elev-saltoluokta")};
+  var routeButtons = {abisko: document.getElementById("route-abisko"), saltoluokta: document.getElementById("route-saltoluokta")};
 
   function countFor(personId){
     var total = 0, done = 0;
@@ -920,9 +1055,19 @@
     progressLabel.textContent = c.done + " / " + c.total + " packed";
   }
 
+  function renderRouteMeta(){
+    var route = ROUTES[state.route];
+    mapCaption.textContent = route.mapCaption;
+    statKm.textContent = route.totalKm;
+    statDays.textContent = route.dayStat;
+    statHigh.textContent = route.highPoint;
+    Object.keys(elevFigures).forEach(function(key){ elevFigures[key].hidden = key !== state.route; });
+    Object.keys(routeButtons).forEach(function(key){ routeButtons[key].setAttribute("aria-selected", key === state.route ? "true" : "false"); });
+  }
+
   function renderTrail(){
     trailList.innerHTML = "";
-    TRAIL.forEach(function(d){
+    ROUTES[state.route].days.forEach(function(d){
       var div = document.createElement("div");
       div.className = "day" + (d.summit ? " summit" : "") + (d.buffer ? " buffer" : "");
       div.setAttribute("data-n", d.buffer ? "B" : d.n);
@@ -930,7 +1075,7 @@
         return '<span class="badge '+b+'">'+BADGE_LABEL[b]+'</span>';
       }).join("");
       div.innerHTML =
-        '<div class="head"><span class="stage">Day '+(d.buffer? "9" : d.n)+' · '+d.stage+'</span>'+
+        '<div class="head"><span class="stage">Day '+d.n+' · '+d.stage+'</span>'+
         '<svg class="day-icon" viewBox="0 0 40 40" role="img" aria-hidden="true"><use href="#ic-'+d.icon+'"></use></svg></div>'+
         '<div class="stats"><span><b>'+d.km+'</b> km</span><span><b>'+d.time+'</b></span></div>'+
         '<div class="note">'+d.note+'</div>'+
@@ -964,10 +1109,21 @@
   tabPack.addEventListener("click", function(){ setTab("pack"); });
   tabTrail.addEventListener("click", function(){ setTab("trail"); });
 
+  // ---------- route toggle ----------
+  Object.keys(routeButtons).forEach(function(key){
+    routeButtons[key].addEventListener("click", function(){
+      state.route = key;
+      save();
+      renderRouteMeta();
+      renderTrail();
+    });
+  });
+
   // ---------- boot ----------
   load();
   setTab(state.tab);
   renderAll();
+  renderRouteMeta();
   renderTrail();
 })();
 </script>
